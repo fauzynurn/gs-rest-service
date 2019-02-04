@@ -6,6 +6,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
+import java.util.List;
 
 @Component
 public class GreetingService {
@@ -16,5 +18,11 @@ public class GreetingService {
     @Transactional
     public void persist(Guest guest) {
         em.persist(guest);
+    }
+
+    public List<Guest> getAllGuests() {
+        TypedQuery<Guest> query = em.createQuery(
+                "SELECT g FROM Guest g", Guest.class);
+        return query.getResultList();
     }
 }
